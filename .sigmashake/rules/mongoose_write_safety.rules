@@ -6,7 +6,7 @@ rule mongoose-block-unsafe-patterns {
   priority 90
   severity error
   DENY write
-  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_mongoose_PATTERN"
+  IF path GLOB "**/*" AND content CONTAINS "$where"
   MESSAGE "Blocked an unsafe pattern in mongoose. Use the recommended best practices for 2025/2026."
 }
 
@@ -14,7 +14,7 @@ rule mongoose-force-updated-api {
   enabled true
   priority 80
   severity warning
-  ASK write
-  IF path GLOB "**/*" AND content CONTAINS "OLD_mongoose_API"
+  LOG write
+  IF path GLOB "**/*" AND content CONTAINS "Model.remove"
   MESSAGE "You are using an outdated API for mongoose. Please upgrade to the newer API."
 }
